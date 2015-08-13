@@ -9,12 +9,19 @@ cgroups是linux内核提供的一种机制，这种机制可以用来限制、�
 * Subsystem（子系统）：一个子系统就是一个资源控制器。cgroups为每种可以控制的资源定义了一个子系统。子系统有cpu，cupacct，cpuset，memory，blkio，devices，net_cls，freezer，ns。当子系统attach到一个Hierarchy上时，便可以对这个Hierarchy中的控制族群进行资源控制。
 
 ###子系统介绍
-1. cpu：限制task（进程）的cpu使用率。
-2. cpuacct：生成cgroup中task（进程）对cpu的使用报告。
-3. cpuset：可以为cgroup中的task（进程）分配cpu节点或内存节点。
-4. blkio：限制cgroup中的task（进程）对块设备（磁盘，USB等）的io。
-5. memory：限制cgroup中task（进程）对内存的使用。
-6. devices：限制cgroup中的task（进程）对设备的访问。<font color=red>（？？？？设备的概念）</font>
-7. freezer：挂起或恢复cgroup中的task（进程）。
-8. net_cls：使用classid（参考tc）标记网络数据包（packet），然后tc（Traffic Control）根据classid对数据爆进行控制。
-9. ns：是不同的cgroup中的task（进程）使用不同的namespace。<font color=red>（？？？？？）</font>
+* cpu：限制task（进程）的cpu使用率。  
+* cpuacct：生成cgroup中task（进程）对cpu的使用报告。
+* cpuset：可以为cgroup中的task（进程）分配cpu节点或内存节点。
+* blkio：限制cgroup中的task（进程）对块设备（磁盘，USB等）的io。
+* memory：限制cgroup中task（进程）对内存的使用。
+* devices：限制cgroup中的task（进程）对设备的访问。<font color=red>（？？？？设备的概念）</font>
+* freezer：挂起或恢复cgroup中的task（进程）。
+* net_cls：使用classid（参考tc）标记网络数据包（packet），然后tc（Traffic Control）根据classid对数据爆进行控制。
+* ns：是不同的cgroup中的task（进程）使用不同的namespace。<font color=red>（？？？？？）</font>
+
+###cgroup的几个性质
+1. cgroup以一个伪文件系统的形式实现，用户可以通过文件操作的方式实现对cgroups的管理和操作。
+2. cgroups的组织管理操作单元可以细粒度到线程级别,可以对线程进行资源限制。
+3. 所有资源管理的功能都以“subsystem（子系统）”的方式实现。
+4. 子进程创建之初与其父进程处于同一个cgroups的控制族群。
+
