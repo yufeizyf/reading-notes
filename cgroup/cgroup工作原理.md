@@ -38,4 +38,39 @@ cgroup工作原理
 	              
 * 一个进程（P）只能隶属于一个css_set，一个css_set可以包含多个进程。隶属于同一css_set的进程受到同一个css_set所关联的资源限制。
 * css_set与cgroup是 n:n 的对应关系。`但是css_net不能关联同一层级下的不同cgroup`。比如css_set1可以同时关联cgr1和cgr3，但是不能同时关联cgr1和cgr2。
-                    
+* 如果新建的层级结构要绑定的子系统与目前已经存在的层级结构完全相同，那么新的挂载会重用原来已经存在的那一套（指向相同的css_set）
+
+###VFS
+VFS 是一个内核抽象层，能够隐藏具体文件系统的实现细节，从而给用户态进程提供一套统一的 API 接口。
+cgroupss正是通过VFS（虚拟文件系统）将功能暴露给用户态。        
+正是基于这样的特点，cgroups在使用上其操作和对文件系统的操作很相似：
+
+* cgroups在使用时，需先挂载cgroups文件系统来创建一个新的`层级结构`。挂在系统时还需要绑定相应的子系统。
+* `cgroups通过创建文件目录来维护其层级关系`。
+* 当一个顶层的cgroup文件系统被卸载（umount）时，如果其中创建后代cgroup目录，那么就算上层的cgroup被卸载了，层级也是激活状态，其后代cgoup中的配置依旧有效。只有递归式的卸载层级中的所有cgoup，那个层级才会被真正删除。
+* 在创建的Hierarchy中创建文件夹，就相当于创建了一个后代cgroup，后代cgroup中默认继承父cgroup中的配置属性，但是你可以根据需求对配置参数进行调整，使其与父cgroup独立。
+
+###cgroups常用命令
+1. 查询cgroup及子系统挂载状态
+
+		查看所有支持的子系统：lssubsys -a
+		查看所有子系统挂载的位置： lssubsys –m
+		查看单个子系统（如cpu）挂载位置：lssubsys –m cpu 
+		
+2. 创建hierarchy层级并挂载子系统
+
+		mount -t cgroup -o net_cls test /sys/fs/cgroup/xxx/
+		-t 后面跟的是挂载的文件系统类型，
+		-o 后面跟的是子系统的类型,如果有多个，用逗号隔开
+		test是一个标识
+		最后是挂载的位置
+3. 添加进程pid到cgroup
+
+		echo [PID] > /sys/fs/cgroup/xxx/tasks		
+4. 卸载？？？
+
+		
+
+
+
+		
