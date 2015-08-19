@@ -25,3 +25,11 @@ cgroups是linux内核提供的一种机制，这种机制可以用来限制、�
 3. 所有资源管理的功能都以“subsystem（子系统）”的方式实现。
 4. 子进程创建之初与其父进程处于同一个cgroups的控制族群。
 
+###cgroup各组成部分之间的关系
+
+* 同一个Hierarchy可以附加`一个或多个`Subsystem。
+* 一个Subsystem可以附加到多个Hierarchy，当且仅当这些Hierarchy只有这唯一一个Subsystem。
+* 对于每一个创建的Hierarchy，task只能存在于其中一个cgroup中，即一个task不能存在于同一个hierarchy的不同cgroup中，但是一个task可以存在在不同hierarchy中的多个cgroup中。
+* 进程（task）在fork自身时创建的子任务（child task）默认与原task在同一个cgroup中，但是child task允许被移动到不同的cgroup中。即`fork完成后，父子进程间是完全独立的`。
+
+
