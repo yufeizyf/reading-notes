@@ -40,8 +40,8 @@ qdisc分为两类：不可分类队列规则和可分类队列规则。
 如果有多种数据流需要进行区别对待，分类的队列规定就非常有用了。一旦数据报进入一个分类的队列规定，他就得被送往某一个类中。对数据包进行分类的时filter，filter会返回一个决定，qdisc会根据这个决定将数据包送入相应的class进行排队，每个class可以再次使用它们的filter进行进一步的分类。直到不需要分类为止，数据报便进入了该class包含的qdisc进行排队。
 		
 * Qdisc Family：root， handle，siblings， parent
-	> 每块网卡都有一个root qdisc
-	> 每个qdisc都需要指定一个句柄（handle），以便以后的配置可以引用到这个qdisc
+	> 每块网卡都有一个root qdisc  
+	> 每个qdisc都需要指定一个句柄（handle），以便以后的配置可以引用到这个qdisc  
 	> handle由两部分组成 major:minor
 	
 * PRIO 分类优先算法，队列规定并不进行整形，它仅仅根据你配置的过滤器把流量进一步细分。
