@@ -16,8 +16,6 @@ RDB方式是通过快照完成的，当某一时刻符合一定规则时，Redis
  
 * 根据配置规则进行自动快照  
 * 执行SAVE或BGSAVE命令时  
-* 执行FLUSHALL命令时  
-* 执行复制操作时  
 
 1.1 根据配置规则进行快照  
      Redis的配置文件redis.conf中关于snapshot的配置。  
