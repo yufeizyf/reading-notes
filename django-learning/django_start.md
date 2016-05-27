@@ -44,7 +44,7 @@
 		urls.py
 		views.py
 ```
-* Django project和Django app的对比
+* Django project和Django app的对比  
 ` Django app是具有某种功能的web应用。Djando project可以理解为某个网站的配置和web应用的集合。`  
 
 	> 	一个Django project可以包含多个Django app  
